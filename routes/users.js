@@ -45,6 +45,29 @@ router.get('/:id/', function(req, res, next) {
   }) 
 });
 
+router.post('/:id/', function(req, res, next) {
+  req.db.from('faves').select("*").where('user', req.params.id)
+    .then(faveList => {
+      if (faveList.some(e => e.symbol == req.body.symbol)) {
+        console.log("deleting because the symbol was:")
+        console.log(req.body.symbol)
+        req.db('faves').where("symbol", req.body.symbol).andWhere("user", req.params.id)
+          .del()
+          .then(req.db.from('faves').select('*').where('user','=', req.params.id)
+          .then((rows) => {
+            res.json({"Error" : false, "Message" : "Success", "Favourites" : rows})
+          }))
+        } else {
+        req.db('faves')
+          .returning("*")
+          .insert([{user: req.params.id, symbol: req.body.symbol}])
+          .then(req.db.from('faves').select('*').where('user','=', req.params.id)
+          .then((rows) => {
+            res.json({"Error" : false, "Message" : "Success", "Favourites" : rows})}))
+      }
+    })
+  })
+
 
 
 module.exports = router;
