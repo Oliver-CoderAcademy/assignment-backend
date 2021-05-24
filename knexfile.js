@@ -1,6 +1,6 @@
 module.exports = {
     client: 'pg',
     connection: {
-        host: process.env.DATABASE_URL || "127.0.0.1",
+        host: "ec2-54-87-112-29.compute-1.amazonaws.com" || "127.0.0.1",
     }
 }
