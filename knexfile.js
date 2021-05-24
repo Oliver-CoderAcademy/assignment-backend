@@ -1,9 +1,7 @@
 module.exports = {
-    client: 'mysql',
+    client: 'pg',
     connection: {
-        host: '127.0.0.1',
-        database: 'mydb',
-        user: 'oliver',
-        password: 'password'
+        connection: process.env.DATABASE_URL || "127.0.0.1",
+        ssl: true
     }
 }
