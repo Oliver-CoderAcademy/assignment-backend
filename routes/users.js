@@ -55,7 +55,7 @@ router.post('/:id/', function(req, res, next) {
         } else {
         req.db('faves')
           .returning("*")
-          .insert([{user: req.params.id, symbol: req.body.symbol}])
+          .insert([{user_id: req.params.id, symbol: req.body.symbol}])
           .then(res.json({"Error" : false, "Message" : "Success"}))
       }
     })
